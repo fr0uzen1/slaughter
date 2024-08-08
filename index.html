@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slaughter</title>
+    
+    <!-- Иконка вкладки браузера -->
+    <link rel="icon" href="images/icon.png" type="image/png">
+    
+    <!-- Open Graph метатеги для Discord -->
+    <meta property="og:title" content="Slaughter - лучший сервер">
+    <meta property="og:description" content="Присоединяйтесь к нам и наслаждайтесь уникальными игровыми режимами на нашем сервере!">
+    <meta property="og:image" content="images/icon.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Slaughter">
+    <meta name="theme-color" content="#5865F2"> <!-- Синий цвет для полоски -->
+
+    <style>
+        @font-face {
+            font-family: 'Bloodshed';
+            src: url('bloodshed.ttf') format('truetype');
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Bloodshed', sans-serif;
+            background-color: #333;
+            color: white;
+            min-height: 200vh;
+            box-sizing: border-box;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            border-bottom: 5px solid #222;
+            position: relative;
+            background-image: url('images/background.jpg');
+            background-size: 100%;
+            background-repeat: no-repeat;
+            transition: all 0.3s ease;
+        }
+        header.small {
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-size: 50%;
+        }
+        header.small .discord-button {
+            transform: translateX(-20px);
+        }
+        header img {
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+        }
+        header.small img {
+            width: 40px;
+            height: 40px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+        }
+        .discord-button {
+            background-color: transparent;
+            border: 2px solid #5865F2;
+            color: #5865F2;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            margin-left: auto;
+        }
+        .discord-button:hover {
+            background-color: #5865F2;
+            color: white;
+        }
+        .image-container {
+            position: relative;
+            width: 100vw;
+            height: 60vh;
+            overflow: hidden;
+        }
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .image-container img.active {
+            opacity: 1;
+        }
+        .image-container .overlay-text {
+            position: absolute;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 3.4em;
+            text-align: center;
+        }
+        .image-container .overlay-text-2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2em;
+            text-align: center;
+        }
+        .image-container .buttons {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .image-container .server-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        .image-container .buttons a {
+            background-color: #5865F2;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        .image-container .buttons a:hover {
+            background-color: #353c92;
+        }
+        .content {
+            padding: 20px;
+        }
+        .section-divider1 {
+            display: flex;
+            align-items: center;
+            margin: 40px 0;
+        }
+        .section-divider1 .section-title {
+            font-size: 1.5em;
+            margin-right: 20px;
+        }
+        .section-divider1 .divider-line {
+            flex-grow: 1;
+            height: 2px;
+            background-color: #5865F2;
+        }
+        .section-divider2 {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .section-divider2 .section-title {
+            font-size: 1.5em;
+            margin-right: 20px;
+        }
+        .section-divider2 .divider-line {
+            flex-grow: 1;
+            height: 2px;
+            background-color: #5865F2;
+        }
+        .section-divider3 {
+            display: flex;
+            align-items: center;
+            margin: 40px 0;
+        }
+        .section-divider3 .section-title {
+            font-size: 1.5em;
+            margin-right: 20px;
+        }
+        .section-divider3 .divider-line {
+            flex-grow: 1;
+            height: 2px;
+            background-color: #5865F2;
+        }
+        /* Стили для картинки, которая будет появляться из угла */
+        #corner-image {
+            position: fixed;
+            bottom: -110px; /* Начальное положение ниже экрана */
+            right: 10px;
+            width: 25px;
+            height: 50px;
+            transition: transform 5.6s ease, bottom 5.6s ease; /* Плавная анимация */
+            transition: transform 5.3s ease;
+            z-index: 1000;
+        }
+        #corner-image.show {
+            bottom: 10px; /* Конечное положение в 10px над нижним краем */
+        }
+    </style>
+</head>
+<body>
+
+    <header id="site-header">
+        <div class="header-content">
+            <img src="images/icon.png" alt="Иконка">
+            <h1>Slaughter</h1>
+        </div>
+        <a href="https://discord.gg/9s8SkYsPjW" class="discord-button">Присоединиться к Discord</a>
+    </header>
+
+    <div class="image-container">
+        <img src="https://i.postimg.cc/3N7NZNZr/20230427172724-1.jpg" alt="Image 1" class="active">
+        <img src="https://i.postimg.cc/d0y0PrHt/poster-23-04-27-19-26-37.png" alt="Image 2">
+        <img src="https://i.postimg.cc/Wz3LjPN6/poster-23-04-27-20-06-01.png" alt="Image 3">
+        <img src="https://i.postimg.cc/vTqy6ZqN/poster-23-04-27-18-09-09.png" alt="Image 4">
+        <img src="https://i.postimg.cc/qvDwjsZ9/9k.png" alt="Image 5">
+        <img src="https://i.postimg.cc/vTqy6ZqN/poster-23-04-27-18-09-09.png" alt="Image 6">
+        <div class="overlay-text">Slaughter</div>
+        <div class="overlay-text-2">лучший сервер в своем роде</div>
+        <div class="buttons">
+            <div class="server-buttons">
+                <a href="steam://connect/185.189.255.108:24232">Подключиться к серверу 1</a>
+                <a href="steam://connect/92.38.222.39:24215">Подключиться к серверу 2</a>
+            </div>
+        </div>
+    </div>    
+
+    <div class="section-divider2">
+        <span class="section-title">   Главное</span>
+        <div class="divider-line"></div>
+    </div>
+
+    <div class="content">
+        <p>Slaughter это сервер с гейммодом bloodshed.</p>
+        <p>Постоянная поддержка и ивенты от админов, всё это здесь есть!</p>
+
+        <div class="section-divider1">
+            <span class="section-title">Режимы</span>
+            <div class="divider-line"></div>
+        </div>
+
+        <p>Slaughter имеет множество под-режимов и типов раундов, но мы перечислим только самые главные.</p>
+        <p>Bloodshed является командным режимом, который отличается наибольшей простотой освоения.</p>
+
+        <div class="section-divider3">
+            <span class="section-title">Уникальный режим - Slaughter</span>
+            <div class="divider-line"></div>
+        </div>
+
+        <p>Режим Slaughter характеризуется широким использованием механики сломанных дверей и засад. Это делает каждый раунд непредсказуемым и динамичным.</p>
+    </div>
+
+    <img id="corner-image" src="images/corner-image.png" alt="Image">
+
+    <script>
+        // Логика для смены изображений каждые 2 секунды
+        const images = document.querySelectorAll('.image-container img');
+        let currentIndex = 0;
+
+        setInterval(() => {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }, 2000);
+
+        // Логика для изменения header при прокрутке страницы
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('small');
+            } else {
+                header.classList.remove('small');
+            }
+        });
+
+        // Логика для появления изображения из угла
+        const cornerImage = document.getElementById('corner-image');
+        setTimeout(() => {
+            cornerImage.classList.add('show');
+        }, 7000);
+    </script>
+</body>
+</html>
